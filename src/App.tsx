@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {FormEvent, useState} from 'react';
 import './App.css';
+import BommerForm from "./BommerForm";
+import BommerFormResultBox from "./BommerFormResultBox";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [bommerFormData, setBommerFormData] = useState({
+        textInput: "",
+        emailInput: "",
+        numberInput: "",
+        birdInput: "",
+    })
+
+    const populateResultBox = (e:FormEvent) => {
+        console.log('test');
+        e.preventDefault();
+    }
+
+    return (
+        <>
+            <BommerForm handleSubmit={populateResultBox}/>
+            <BommerFormResultBox />
+        </>
+
+    );
 }
-
-export default App;

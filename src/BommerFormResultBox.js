@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-export default function BommerFormResultBox() {
+export default function BommerFormResultBox(props) {
 
     return (
 
@@ -11,25 +11,25 @@ export default function BommerFormResultBox() {
                     <td>
                         <b>Text:</b>
                     </td>
-                    <td></td>
+                    <td>{props.resultData.textInput}</td>
                 </tr>
                 <tr>
                     <td>
                         <b>Email:</b>
                     </td>
-                    <td></td>
+                    <td>{props.resultData.emailInput}</td>
                 </tr>
                 <tr>
                     <td>
                         <b>Magic Number:</b>
                     </td>
-                    <td></td>
+                    <td>{props.resultData.numbertInput}</td>
                 </tr>
                 <tr>
                     <td>
                         <b>Bird:</b>
                     </td>
-                    <td></td>
+                    <td>{props.resultData.birdInput}</td>
                 </tr>
             </table>
         </div>

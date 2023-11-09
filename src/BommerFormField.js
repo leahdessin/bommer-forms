@@ -1,11 +1,10 @@
 import React from "react";
 
-export default function BommerFormField({fieldType, fieldValue, setFieldValue}) {
+export default function BommerFormField(props) {
     return (
         <div className="form-field">
             <label>
-                <span>{fieldType} Input:</span>
-                <input type={fieldType} onChange={(e) => setFieldValue( e.target.value)} value={fieldValue} />
+                { props.children }
             </label>
         </div>
     )

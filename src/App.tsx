@@ -4,22 +4,28 @@ import BommerForm from "./BommerForm";
 import BommerFormResultBox from "./BommerFormResultBox";
 
 export default function App() {
+    const [formResults, setFormResults] = useState({
+        // also functions as initial state to `bommerFormData`
+        textInput: "james",
+        emailInput: "jray@bommer.io",
+        numberInput: "0243432",
+        birdInput: "crow",
+    })
+
     const [bommerFormData, setBommerFormData] = useState({
-        textInput: "",
-        emailInput: "",
-        numberInput: "",
-        birdInput: "",
+        ...formResults
     })
 
     const populateResultBox = (e:FormEvent) => {
-        console.log('test');
+        // only update result box on submit action
+        setFormResults({...bommerFormData});
         e.preventDefault();
     }
 
     return (
         <>
-            <BommerForm handleSubmit={populateResultBox}/>
-            <BommerFormResultBox />
+            <BommerForm formData={bommerFormData} setFormData={setBommerFormData} handleSubmit={populateResultBox}/>
+            <BommerFormResultBox resultData={formResults} />
         </>
 
     );

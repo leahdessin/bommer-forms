@@ -1,5 +1,4 @@
-import { ComponentValues, UserProperty, ValueAndUnit } from "./lib/ts_exp";
-import { PropertyType } from "./lib/ts_exp-enums";
+import { ComponentValues, UserProperty, ValueAndUnit, PropertyType } from "./lib/ts_exp";
 
 const testProperties = [
     new UserProperty('default0', 'General', 'Item #', PropertyType.Text, true), //0

@@ -12,7 +12,7 @@ export default function App() {
 
     useEffect(() => {
         dispatch(fetchPropertiesFromBackend())
-    })
+    }, [])
 
     const populateResultBox = (e:FormEvent) => {
         // only update result box on submit action

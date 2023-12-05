@@ -23,7 +23,7 @@ export default function BommerFormResultBox(props) {
                     <td>
                         <b>Magic Number:</b>
                     </td>
-                    <td>{props.resultData.numbertInput}</td>
+                    <td>{props.resultData.numberInput}</td>
                 </tr>
                 <tr>
                     <td>

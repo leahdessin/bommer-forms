@@ -21,7 +21,7 @@ const testProperties = [
     new UserProperty('default14', 'Vendor 1', 'Vendor Stock', PropertyType.Text, false), //16
 ]
 
-function loadPropertiesFromBackend(): Promise<UserProperty[]> {
+export function loadPropertiesFromBackend(): Promise<UserProperty[]> {
     return new Promise<UserProperty[]>((resolve, reject) => {
         resolve(testProperties);
     });

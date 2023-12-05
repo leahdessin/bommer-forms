@@ -39,7 +39,7 @@ export class ComponentValues {
 
     getValue(prop:UserProperty) {
         let key = prop.id;
-        let value = this._values[key];
+        let value = this._values.get(key);
         if(value != null) {
             return value;
         }
@@ -53,7 +53,7 @@ export class ComponentValues {
             return;
         } else {
             let v = new ValueAndUnit(value.value,value.unit,null);
-            this._values[k] = v;
+            this._values.set(k, v);
         }
     }
     private readonly _values: Map<string, ValueAndUnit>;

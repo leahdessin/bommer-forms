@@ -5,7 +5,7 @@ import BommerFormField from "./BommerFormField";
 
 export default function BommerForm(props:any) {
 
-    const formState = useAppSelector((state) => state.formData)
+    const formState = useAppSelector((state) => state.formData.formData)
     const dispatch = useAppDispatch()
 
     return (

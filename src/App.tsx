@@ -10,8 +10,7 @@ export default function App() {
 
     useEffect(() => {
         dispatch(fetchPropertiesFromBackend())
-        //dispatch(fetchPopulatedPropertiesFromBackend())
-    })
+    }, [])
 
     console.log(resultsData.populatedUserProperties)
 

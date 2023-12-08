@@ -2,15 +2,42 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from './hooks';
 import { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, updateFormState } from './formDataSlice';
 import BommerFormField from "./BommerFormField";
+import type { UserProperty } from './lib/ts_exp'
 
 export default function BommerForm(props:any) {
 
     const formState = useAppSelector((state) => state.formData.formData)
+    const userPropertiesState = useAppSelector((state) => state.formData.userProperties)
     const dispatch = useAppDispatch()
+    const userProps = props.userProps
+
+    const fieldTypeMap = {
+        'Text': 'text',
+        'TrueFalse': 'checkbox',
+        'MultipleChoice': 'select',
+        'Decimal': 'number',
+        'Number': 'number'
+    }
+
+    const formFields = userProps.map((userProp:UserProperty, index:number) => {
+        console.log(userProp);
+        const fieldType = userProp.propertyType._hx_name
+        return(
+            <BommerFormField id={userProp.id}>
+                <span>{userProp.name}</span>
+                <input
+                    type={fieldTypeMap[fieldType]}
+                    onChange={(e) => dispatch(updateFormState(userPropertiesState)) }
+                />
+            </BommerFormField>
+        )
+    })
+
 
     return (
-        <form onSubmit={(e)=>{props.handleSubmit(e)}}>
+        <form onSubmit={(e)=>{e.preventDefault()}}>
             <h1>Bommer Forms</h1>
+            {formFields}
             <BommerFormField>
                 <span>Name Input:</span>
                 <input type="text" onChange={(e) => dispatch(updateTextInput(e.target.value)) } value={formState.textInput} />

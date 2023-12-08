@@ -27,7 +27,7 @@ export function loadPropertiesFromBackend(): Promise<UserProperty[]> {
     });
 }
 
-function loadValuesFromBackend(): Promise<ComponentValues> {
+export function loadValuesFromBackend(): Promise<ComponentValues> {
 
     return new Promise<ComponentValues>((resolve, reject) => {
         const values = new ComponentValues();

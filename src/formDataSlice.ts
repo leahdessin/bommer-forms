@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
-import type { UserProperty } from './lib/ts_exp'
-import { loadPropertiesFromBackend } from './mockBackend'
+import type { UserProperty, ComponentValues } from './lib/ts_exp'
+import {loadPropertiesFromBackend, loadValuesFromBackend} from './mockBackend'
 
 // Define a type for the slice state
 export interface FormDataPart {
@@ -14,7 +14,8 @@ export interface FormDataPart {
 export interface FormDataState {
     formData: FormDataPart,
     resultsData : FormDataPart,
-    userProperties: UserProperty[]
+    userProperties: UserProperty[],
+    populatedUserProperties: ComponentValues | null
 }
 
 // Define the initial state using that type
@@ -31,13 +32,21 @@ const initialState: FormDataState = {
         numberInput: '',
         birdInput: '',
     },
-    userProperties : []
+    userProperties : [],
+    populatedUserProperties: null
 }
 
 export const fetchPropertiesFromBackend = createAsyncThunk(
     'form-data-slice/fetchPropertiesFromBackend',
     async (thunkAPI) => {
         return await loadPropertiesFromBackend()
+    }
+)
+export const fetchPopulatedPropertiesFromBackend = createAsyncThunk(
+    'form-data-slice/fetchPopulatedPropertiesFromBackend',
+    async (thunkAPI) => {
+        console.log('calling');
+        return await loadValuesFromBackend()
     }
 )
 
@@ -57,8 +66,8 @@ export const formDataSlice = createSlice({
         updateBirdInput: (state, action: PayloadAction<string>) => {
             state.formData.birdInput = action.payload
         },
-        updateFormState:(state, action: PayloadAction<FormDataPart>) => {
-            state.resultsData = action.payload
+        updateFormState:(state, action: PayloadAction<UserProperty[]>) => {
+            state.userProperties = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -66,6 +75,10 @@ export const formDataSlice = createSlice({
         builder.addCase(fetchPropertiesFromBackend.fulfilled, (state, action:PayloadAction<UserProperty[]>) => {
             // Add user to the state array
             state.userProperties = action.payload
+        })
+        builder.addCase(fetchPopulatedPropertiesFromBackend.fulfilled, (state, action:PayloadAction<ComponentValues>) => {
+            // Add user to the state array
+            state.populatedUserProperties = action.payload
         })
     },
 })

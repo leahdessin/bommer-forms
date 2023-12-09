@@ -29,6 +29,7 @@ export class UserProperty {
 
 export class ComponentValues {
     constructor();
+    copy(): ComponentValues;
     valueCount(): number;
     getValue(prop: UserProperty): ValueAndUnit;
     setValue(prop: UserProperty, value: ValueAndUnit): void;

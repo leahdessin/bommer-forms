@@ -1,14 +1,24 @@
 
 
-export namespace PropertyType {
-    var Text: { _hx_name: "Text" };
-    var TrueFalse: { _hx_name: "TrueFalse" };
-    function MultipleChoice(values: string[], allowNewValues: boolean): { _hx_name: "MultipleChoice", values: string[], allowNewValues: boolean };
-    var Decimal: { _hx_name: "Decimal" };
-    var Number: { _hx_name: "Number" };
+export declare namespace PropertyType {
+    export type TrueFalse = {"_name": "TrueFalse", _hx_index: 2, __enum__: "bommer_platform.model.PropertyType"}
+    export const TrueFalse: TrueFalse
+    export type Text = {"_name": "Text", _hx_index: 1, __enum__: "bommer_platform.model.PropertyType"}
+    export const Text: Text
+    export type Number = {"_name": "Number", _hx_index: 6, __enum__: "bommer_platform.model.PropertyType"}
+    export const Number: Number
+    export type MultipleChoice = {"_name": "MultipleChoice", _hx_index: 3, values: string[], allowNewValues: boolean, __enum__: "bommer_platform.model.PropertyType"}
+    export const MultipleChoice: (values: string[], allowNewValues: boolean) => PropertyType
+    export type Decimal = {"_name": "Decimal", _hx_index: 5, __enum__: "bommer_platform.model.PropertyType"}
+    export const Decimal: Decimal
 }
 
-export type PropertyType =  { _hx_name: "Text" } | { _hx_name: "TrueFalse" } | { _hx_name: "MultipleChoice", values: string[], allowNewValues: boolean } |  { _hx_name: "Decimal" } | { _hx_name: "Number" }
+export declare type PropertyType =
+    | PropertyType.TrueFalse
+    | PropertyType.Text
+    | PropertyType.Number
+    | PropertyType.MultipleChoice
+    | PropertyType.Decimal
 
 export class ValueAndUnit {
     constructor(value: any | null, unit: string | null, error: string | null);

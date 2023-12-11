@@ -1,13 +1,16 @@
 
 var $estr = function() { return JSON.stringify(this); },$_
 
-export var PropertyType = { __ename__:"bommer_platform.model.PropertyType",__constructs__:null
-  ,Text: {_hx_name:"Text",_hx_index:1,__enum__:"bommer_platform.model.PropertyType",toString:$estr}
-  ,TrueFalse: {_hx_name:"TrueFalse",_hx_index:2,__enum__:"bommer_platform.model.PropertyType",toString:$estr}
-  ,MultipleChoice: ($_=function(values,allowNewValues) { return {_hx_index:3,values:values,allowNewValues:allowNewValues,__enum__:"bommer_platform.model.PropertyType",toString:$estr}; },$_._hx_name="MultipleChoice",$_.__params__ = ["values","allowNewValues"],$_)
-  ,Decimal: {_hx_name:"Decimal",_hx_index:5,__enum__:"bommer_platform.model.PropertyType",toString:$estr}
-  ,Number: {_hx_name:"Number",_hx_index:6,__enum__:"bommer_platform.model.PropertyType",toString:$estr}
-};
+export var PropertyType = {
+  __ename__: "bommer_platform.model.PropertyType",
+
+  Text: {_hx_name: "Text", _hx_index: 1, __enum__: "bommer_platform.model.PropertyType", "_name": "Text"},
+  TrueFalse: {_hx_name: "TrueFalse", _hx_index: 2, __enum__: "bommer_platform.model.PropertyType", "_name": "TrueFalse"},
+  MultipleChoice: Object.assign((values, allowNewValues) => ({_hx_index: 3, __enum__: "bommer_platform.model.PropertyType", "values": values, "allowNewValues": allowNewValues, "_name": "MultipleChoice"}), {_hx_name: "MultipleChoice", __params__: ["values", "allowNewValues"]}),
+  Decimal: {_hx_name: "Decimal", _hx_index: 5, __enum__: "bommer_platform.model.PropertyType", "_name": "Decimal"},
+  Number: {_hx_name: "Number", _hx_index: 6, __enum__: "bommer_platform.model.PropertyType", "_name": "Number"},
+}
+
 export class ValueAndUnit {
   constructor(value, unit, error) {
     this.value = value

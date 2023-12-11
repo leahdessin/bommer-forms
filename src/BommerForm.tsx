@@ -4,7 +4,6 @@ import { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, 
 import BommerFormField from "./BommerFormField";
 import type { PropertyType, UserProperty } from './lib/ts_exp'
 
-const foo = () => ({ bar: 1 })
 export default function BommerForm(props:any) {
 
     const formState = useAppSelector((state) => state.formData.formData)
@@ -21,7 +20,7 @@ export default function BommerForm(props:any) {
     }
 
     const renderTypeSpecificField = (fieldType:PropertyType) => {
-        if (fieldType._hx_name == 'MultipleChoice') {
+        if (fieldType._name === "MultipleChoice") {
             return (
                 <select>
                     {fieldType.values.map(v => (<option value={v}>v</option>))}
@@ -31,17 +30,9 @@ export default function BommerForm(props:any) {
 
         return (
             <input
-                type={fieldTypeMap[fieldType._hx_name]}
+                type={fieldTypeMap[fieldType._name]}
                 onChange={(e) => dispatch(updateFormState(userPropertiesState))}
             />)
-        /*
-        switch(fieldType) {
-            case 'Text':
-            case 'Decimal':
-            case 'Number':
-
-        }
-        return null */
     }
 
     const formFields = userProps.map((userProp:UserProperty, index:number) => {

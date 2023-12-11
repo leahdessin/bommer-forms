@@ -1,14 +1,14 @@
 
 
 export namespace PropertyType {
-    var Text: { _hx_name: "Text" };
-    var TrueFalse: { _hx_name: "TrueFalse" };
-    function MultipleChoice(values: string[], allowNewValues: boolean): { _hx_name: "MultipleChoice", values: string[], allowNewValues: boolean };
-    var Decimal: { _hx_name: "Decimal" };
-    var Number: { _hx_name: "Number" };
+    var Text: { _hx_index: 1 };
+    var TrueFalse: { _hx_index: 2 };
+    function MultipleChoice(values: string[], allowNewValues: boolean): { _hx_index: 3, values: string[], allowNewValues: boolean };
+    var Decimal: { _hx_index: 5 };
+    var Number: { _hx_index: 6 };
 }
 
-export type PropertyType =  { _hx_name: "Text" } | { _hx_name: "TrueFalse" } | { _hx_name: "MultipleChoice", values: string[], allowNewValues: boolean } |  { _hx_name: "Decimal" } | { _hx_name: "Number" }
+export type PropertyType =  { _hx_index: 1 } | { _hx_index: 2 } | { _hx_index: 3, values: string[], allowNewValues: boolean } |  {  _hx_index: 5 } | { _hx_index: 6 }
 
 export class ValueAndUnit {
     constructor(value: any | null, unit: string | null, error: string | null);

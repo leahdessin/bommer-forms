@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from './hooks';
-import { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, updateFormState } from './formDataSlice';
+import { updateValue } from './formDataSlice';
 import BommerFormField from "./BommerFormField";
 import type { PropertyType, UserProperty } from './lib/ts_exp'
 
@@ -9,48 +9,44 @@ export default function BommerForm(props:any) {
 
     const formState = useAppSelector((state) => state.formData.formData)
     const userPropertiesState = useAppSelector((state) => state.formData.userProperties)
+    const userValues = useAppSelector((state) => state.formData.values)
     const dispatch = useAppDispatch()
     const userProps = props.userProps
 
     const fieldTypeMap = {
-        'Text': 'text',
-        'TrueFalse': 'checkbox',
-        'MultipleChoice': 'select',
-        'Decimal': 'number',
-        'Number': 'number'
+        1: 'text',
+        2: 'checkbox',
+        3: 'select',
+        5: 'number',
+        6: 'number'
     }
 
-    const renderTypeSpecificField = (fieldType:PropertyType) => {
-        if (fieldType._hx_name == 'MultipleChoice') {
+    const renderTypeSpecificField = (userProp:UserProperty) => {
+        const newVal = userValues.getValue(userProp)?.value||""
+        if (userProp.propertyType._hx_index === 3) {
             return (
-                <select>
-                    {fieldType.values.map(v => (<option value={v}>v</option>))}
+                <select defaultValue={newVal}>
+                    {userProp.propertyType.values.map(v => (<option value={v}>{v}</option>))}
                 </select>
             )
         }
-
         return (
             <input
-                type={fieldTypeMap[fieldType._hx_name]}
-                onChange={(e) => dispatch(updateFormState(userPropertiesState))}
+                type={fieldTypeMap[userProp.propertyType._hx_index]}
+                onChange={(e) =>{
+                    console.log(e);
+                    dispatch(updateValue({prop: userProp, value: e.target.value}))}
+            }
+                value={ newVal }
             />)
-        /*
-        switch(fieldType) {
-            case 'Text':
-            case 'Decimal':
-            case 'Number':
-
-        }
-        return null */
     }
 
     const formFields = userProps.map((userProp:UserProperty, index:number) => {
-        console.log(userProp);
         const fieldType = userProp.propertyType
         return(
-            <BommerFormField id={userProp.id}>
-                <span>{userProp.name}</span>
-                {renderTypeSpecificField(fieldType)}
+            <BommerFormField key={userProp.id} id={userProp.id}>
+                <span>{userProp.name}:</span>
+                {renderTypeSpecificField(userProp)}
             </BommerFormField>
         )
     })
@@ -60,27 +56,6 @@ export default function BommerForm(props:any) {
         <form onSubmit={(e)=>{e.preventDefault()}}>
             <h1>Bommer Forms</h1>
             {formFields}
-            <BommerFormField>
-                <span>Name Input:</span>
-                <input type="text" onChange={(e) => dispatch(updateTextInput(e.target.value)) } value={formState.textInput} />
-            </BommerFormField>
-            <BommerFormField>
-                <span>Email Input:</span>
-                <input type="email" onChange={(e) => dispatch(updateEmailInput(e.target.value)) } value={formState.emailInput} />
-            </BommerFormField>
-            <BommerFormField>
-                <span>Number Input:</span>
-                <input type="number" onChange={(e) => dispatch(updateNumberInput(e.target.value)) } value={formState.numberInput} />
-            </BommerFormField>
-            <BommerFormField fieldType='select'>
-                <span>Bird Input:</span>
-                <select onChange={(e) => dispatch(updateBirdInput(e.target.value)) } value={formState.birdInput}>
-                    <option value="owl">Owl</option>
-                    <option value="crow">Crow</option>
-                    <option value="falcon">Falcon</option>
-                    <option value="hawk">Hawk</option>
-                </select>
-            </BommerFormField>
             <input type="submit" value="Send it"/>
         </form>
     )

@@ -58,7 +58,7 @@ export class ComponentValues {
 
   copy() {
     let other = new ComponentValues();
-    other._values = this._values.copy();
+    other._values = new Map(this._values);
     return other;
   }
 }

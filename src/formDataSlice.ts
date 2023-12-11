@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
-import type { UserProperty, ComponentValues } from './lib/ts_exp'
+import { UserProperty, ComponentValues } from './lib/ts_exp'
 import {loadPropertiesFromBackend, loadValuesFromBackend} from './mockBackend'
+import {ValueAndUnit} from "./lib/ts_exp";
 
 // Define a type for the slice state
 export interface FormDataPart {
@@ -15,7 +16,7 @@ export interface FormDataState {
     formData: FormDataPart,
     resultsData : FormDataPart,
     userProperties: UserProperty[],
-    populatedUserProperties: ComponentValues | null
+    values: ComponentValues
 }
 
 // Define the initial state using that type
@@ -33,7 +34,7 @@ const initialState: FormDataState = {
         birdInput: '',
     },
     userProperties : [],
-    populatedUserProperties: null
+    values: new ComponentValues()
 }
 
 export const fetchPropertiesFromBackend = createAsyncThunk(
@@ -69,6 +70,12 @@ export const formDataSlice = createSlice({
         updateFormState:(state, action: PayloadAction<UserProperty[]>) => {
             state.userProperties = action.payload
         },
+        updateValue: (state, action: PayloadAction<{ prop:UserProperty, value:any }>) => {
+            const newValues = state.values.copy()
+            //const newValues = new ComponentValues()
+            newValues.setValue(action.payload.prop, new ValueAndUnit(action.payload.value, null, null))
+            state.values = newValues
+        }
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -78,12 +85,12 @@ export const formDataSlice = createSlice({
         })
         builder.addCase(fetchPopulatedPropertiesFromBackend.fulfilled, (state, action:PayloadAction<ComponentValues>) => {
             // Add user to the state array
-            state.populatedUserProperties = action.payload
+            state.values = action.payload
         })
     },
 })
 
-export const { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, updateFormState } = formDataSlice.actions
+export const { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, updateFormState, updateValue } = formDataSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectFormData = (state: RootState) => state.formData

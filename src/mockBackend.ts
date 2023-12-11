@@ -53,8 +53,14 @@ export function loadValuesFromBackend(): Promise<ComponentValues> {
 }
 
 
-function saveValuesToBackend(newValues: ComponentValues) {
+export function saveValuesToBackend(newValues: ComponentValues) {
     for (const p of testProperties) {
         console.log(`saving ${p.name}: ${(newValues.getValue(p) || new ValueAndUnit("null", null, null)).value}`)
     }
+    return new Promise<boolean>((resolve, reject) => {
+        if(newValues){
+            resolve(true);
+        }
+        resolve(false);
+    });
 }

@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from './hooks';
 import { updateValue } from './formDataSlice';
 import BommerFormField from "./BommerFormField";
 import type { UserProperty } from './lib/ts_exp'
+import styled from 'styled-components'
 
 export default function BommerForm(props:any) {
 
@@ -18,6 +19,18 @@ export default function BommerForm(props:any) {
         6: 'number'
     }
 
+    const Input = styled.input`
+      height: 1.5em;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      padding: 5px;
+      
+      &:focus {
+        border: 1px solid #000; 
+        outline: none;
+      }
+    `;
+
     const renderTypeSpecificField = (userProp:UserProperty) => {
         const newVal = userValues.getValue(userProp)?.value||""
         if (userProp.propertyType._hx_index === 3) {
@@ -28,12 +41,13 @@ export default function BommerForm(props:any) {
             )
         }
         return (
-            <input
+            <Input
                 type={fieldTypeMap[userProp.propertyType._hx_index]}
                 onChange={(e) =>{
-                    console.log(e);
-                    dispatch(updateValue({prop: userProp, value: e.target.value}))}
+                    const targetVal = e.target.value || e.target.checked;
+                    dispatch(updateValue({prop: userProp, value: targetVal}))}
             }
+                checked={ newVal }
                 value={ newVal }
             />)
     }
@@ -47,10 +61,16 @@ export default function BommerForm(props:any) {
         )
     })
 
+    const Title = styled.h1`
+      font-size: 3em;
+      text-align: center;
+      color: blue;
+    `;
+
 
     return (
-        <form onSubmit={(e)=>{e.preventDefault()}}>
-            <h1>Bommer Forms</h1>
+        <form onSubmit={props.onSubmitAction}>
+            <Title>Bommer Forms</Title>
             {formFields}
             <input type="submit" value="Send it"/>
         </form>

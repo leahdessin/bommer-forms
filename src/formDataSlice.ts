@@ -2,39 +2,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import { UserProperty, ComponentValues } from './lib/ts_exp'
-import {loadPropertiesFromBackend, loadValuesFromBackend} from './mockBackend'
+import { loadPropertiesFromBackend, loadValuesFromBackend, saveValuesToBackend } from './mockBackend'
 import {ValueAndUnit} from "./lib/ts_exp";
 
-// Define a type for the slice state
-export interface FormDataPart {
-    textInput: string,
-    emailInput: string,
-    numberInput: string,
-    birdInput: string,
-}
 export interface FormDataState {
-    formData: FormDataPart,
-    resultsData : FormDataPart,
     userProperties: UserProperty[],
-    values: ComponentValues
+    values: ComponentValues,
 }
 
 // Define the initial state using that type
 const initialState: FormDataState = {
-    formData : {
-        textInput: "james",
-        emailInput: "jray@bommer.io",
-        numberInput: "12345",
-        birdInput: "crow",
-    },
-    resultsData : {
-        textInput: '',
-        emailInput: '',
-        numberInput: '',
-        birdInput: '',
-    },
     userProperties : [],
-    values: new ComponentValues()
+    values: new ComponentValues(),
 }
 
 export const fetchPropertiesFromBackend = createAsyncThunk(
@@ -47,6 +26,12 @@ export const fetchPopulatedPropertiesFromBackend = createAsyncThunk(
     'form-data-slice/fetchPopulatedPropertiesFromBackend',
     async (thunkAPI) => {
         return await loadValuesFromBackend()
+    }
+)
+export const sendPropertiesToBackend = createAsyncThunk(
+    'form-data-slice/sendPropertiesToBackend',
+    async (newValues:ComponentValues, thunkAPI) => {
+        return saveValuesToBackend(newValues)
     }
 )
 
@@ -67,12 +52,13 @@ export const formDataSlice = createSlice({
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(fetchPropertiesFromBackend.fulfilled, (state, action:PayloadAction<UserProperty[]>) => {
-            // Add user to the state array
             state.userProperties = action.payload
         })
         builder.addCase(fetchPopulatedPropertiesFromBackend.fulfilled, (state, action:PayloadAction<ComponentValues>) => {
-            // Add user to the state array
             state.values = action.payload
+        })
+        builder.addCase(sendPropertiesToBackend.fulfilled, (state, action:PayloadAction<boolean>) => {
+            console.log('Did it work? ' + action.payload);
         })
     },
 })

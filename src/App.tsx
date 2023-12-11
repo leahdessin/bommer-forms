@@ -2,11 +2,11 @@ import React, {FormEvent, useEffect} from 'react';
 import './App.css';
 import BommerForm from "./BommerForm";
 import { useAppSelector, useAppDispatch } from "./hooks";
-import {updateFormState, fetchPropertiesFromBackend, fetchPopulatedPropertiesFromBackend } from "./formDataSlice";
+import { fetchPropertiesFromBackend, fetchPopulatedPropertiesFromBackend, sendPropertiesToBackend } from "./formDataSlice";
 
 
 export default function App() {
-    const resultsData = useAppSelector((state) => state.formData)
+    const formData = useAppSelector((state) => state.formData)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -14,9 +14,14 @@ export default function App() {
         dispatch(fetchPopulatedPropertiesFromBackend())
     }, [])
 
+    const submitAction = (e:FormEvent) => {
+        e.preventDefault();
+        dispatch(sendPropertiesToBackend(formData.values))
+    }
+
     return (
         <>
-            <BommerForm userProps={resultsData.userProperties} />
+            <BommerForm onSubmitAction={submitAction} userProps={formData.userProperties} />
         </>
 
     );

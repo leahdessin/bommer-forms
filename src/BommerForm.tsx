@@ -2,13 +2,10 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from './hooks';
 import { updateValue } from './formDataSlice';
 import BommerFormField from "./BommerFormField";
-import type { PropertyType, UserProperty } from './lib/ts_exp'
+import type { UserProperty } from './lib/ts_exp'
 
-const foo = () => ({ bar: 1 })
 export default function BommerForm(props:any) {
 
-    const formState = useAppSelector((state) => state.formData.formData)
-    const userPropertiesState = useAppSelector((state) => state.formData.userProperties)
     const userValues = useAppSelector((state) => state.formData.values)
     const dispatch = useAppDispatch()
     const userProps = props.userProps
@@ -41,8 +38,7 @@ export default function BommerForm(props:any) {
             />)
     }
 
-    const formFields = userProps.map((userProp:UserProperty, index:number) => {
-        const fieldType = userProp.propertyType
+    const formFields = userProps.map((userProp:UserProperty) => {
         return(
             <BommerFormField key={userProp.id} id={userProp.id}>
                 <span>{userProp.name}:</span>

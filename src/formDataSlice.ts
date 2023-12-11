@@ -46,7 +46,6 @@ export const fetchPropertiesFromBackend = createAsyncThunk(
 export const fetchPopulatedPropertiesFromBackend = createAsyncThunk(
     'form-data-slice/fetchPopulatedPropertiesFromBackend',
     async (thunkAPI) => {
-        console.log('calling');
         return await loadValuesFromBackend()
     }
 )
@@ -55,18 +54,6 @@ export const formDataSlice = createSlice({
     name: 'form-data-slice',
     initialState,
     reducers: {
-        updateTextInput: (state, action: PayloadAction<string>) => {
-            state.formData.textInput = action.payload
-        },
-        updateEmailInput: (state, action: PayloadAction<string>) => {
-            state.formData.emailInput = action.payload
-        },
-        updateNumberInput: (state, action: PayloadAction<string>) => {
-            state.formData.numberInput = action.payload
-        },
-        updateBirdInput: (state, action: PayloadAction<string>) => {
-            state.formData.birdInput = action.payload
-        },
         updateFormState:(state, action: PayloadAction<UserProperty[]>) => {
             state.userProperties = action.payload
         },
@@ -90,7 +77,7 @@ export const formDataSlice = createSlice({
     },
 })
 
-export const { updateTextInput, updateEmailInput, updateNumberInput, updateBirdInput, updateFormState, updateValue } = formDataSlice.actions
+export const { updateFormState, updateValue } = formDataSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectFormData = (state: RootState) => state.formData

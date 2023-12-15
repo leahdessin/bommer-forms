@@ -19,7 +19,7 @@ export default function BommerForm(props:any) {
         6: 'number'
     }
 
-    const Input = styled.input`
+    const StyledInput = styled.input`
       height: 1.5em;
       border: 1px solid #aaa;
       border-radius: 3px;
@@ -41,7 +41,7 @@ export default function BommerForm(props:any) {
             )
         }
         return (
-            <Input
+            <StyledInput
                 type={fieldTypeMap[userProp.propertyType._hx_index]}
                 onChange={(e) =>{
                     const targetVal = e.target.value || e.target.checked;

@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from './hooks';
 import { updateValue } from './formDataSlice';
 import BommerFormField from "./BommerFormField";
 import type { UserProperty } from './lib/ts_exp'
-import styled from 'styled-components'
+import styles from "./BommerForm.module.scss"
 
 export default function BommerForm(props:any) {
 
@@ -19,6 +19,7 @@ export default function BommerForm(props:any) {
         6: 'number'
     }
 
+    /*
     const StyledInput = styled.input`
       height: 1.5em;
       border: 1px solid #aaa;
@@ -29,7 +30,7 @@ export default function BommerForm(props:any) {
         border: 1px solid #000; 
         outline: none;
       }
-    `;
+    `;*/
 
     const renderTypeSpecificField = (userProp:UserProperty) => {
         const newVal = userValues.getValue(userProp)?.value||""
@@ -41,7 +42,8 @@ export default function BommerForm(props:any) {
             )
         }
         return (
-            <StyledInput
+            <input
+                className={styles.input}
                 type={fieldTypeMap[userProp.propertyType._hx_index]}
                 onChange={(e) =>{
                     const targetVal = e.target.value || e.target.checked;
@@ -61,16 +63,17 @@ export default function BommerForm(props:any) {
         )
     })
 
+    /*
     const Title = styled.h1`
       font-size: 3em;
       text-align: center;
       color: blue;
-    `;
+    `;*/
 
 
     return (
         <form onSubmit={props.onSubmitAction}>
-            <Title>Bommer Forms</Title>
+            <h1 className={styles.tltle}>Bommer Forms</h1>
             {formFields}
             <input type="submit" value="Send it"/>
         </form>
